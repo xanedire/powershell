@@ -1,6 +1,4 @@
-#v1.0 - initial
-#v1.1 - added timestamp as option; removed [always time stamp on entry]
-#next - v1.2 - add toggle for time stamp - need to clean up example
+#for quick notes with time stamps
 
 <#
 .SYNOPSIS
@@ -51,20 +49,17 @@ function new-journal{
         {new-item -path .\"$journal".txt}
 }
 function journal-entry{
-    read-host 'What is your entry?'| Out-File -Append .\"$journal".txt
-}
-function print-time-stamp{
     get-date -format "dd/MM HH:mm yyyy" | Out-File -Append .\"$journal".txt
+    read-host 'What is your entry?'| Out-File -Append .\"$journal".txt
 }
 function start-script{
     clear
-    switch(read-host "`n Are you going to make another journal entry? `n Press [any key] to start another entry, [T] to add a time stamp, or [X] to quit"){
+    switch(read-host "`n Are you going to make another journal entry? `n Press [any key] to start another entry, or [X] to quit"){
         x{exit}
-        t{print-time-stamp}
         default{journal-entry}
     }
 }
-Get-ChildItem -Path $PSScriptRoot/* -Name
+gci -Path $PSScriptRoot/* -Name
 $journal = read-host "What is the name of your journal?"
 new-journal
 while ($true) {
